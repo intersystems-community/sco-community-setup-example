@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  iris:
+    image: containers.intersystems.com/intersystems/supplychainorchestrator-community:2026.1-1.7.3
+    hostname: "iris"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports: 
+      - 1972:1972
+    volumes:
+      - ./external:/external
+    environment:
+      - ISC_DATA_DIRECTORY=/external/dur
+
+  webgateway:
+    image: containers.intersystems.com/intersystems/webgateway:2026.1
+    init: true
+    container_name: webgateway
+    hostname: webgateway
+    ports:
+    - 52773:80
+    environment:
+    - ISC_DATA_DIRECTORY=/webgateway-shared/durable
+    - ISC_CSP_CONF_FILE=/webgateway-shared/CSP.conf
+    - ISC_CSP_INI_FILE=/webgateway-shared/CSP.ini
+    volumes:
+    - type: bind
+      source: ./webgateway
+      target: /webgateway-shared
