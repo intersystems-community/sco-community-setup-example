@@ -1,8 +1,8 @@
 version: '3.9'
 services:
-  iris:
+  sco:
     image: containers.intersystems.com/intersystems/supplychainorchestrator-community:2026.1-1.7.3
-    hostname: "iris"
+    hostname: "sco"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports: 
